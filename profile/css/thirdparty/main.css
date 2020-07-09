@@ -1,0 +1,30 @@
+
+img{
+        box-shadow: 10px 10px 5px gray;
+        /* width: 98%;
+        height: 98%;  */
+        width: 650px; height: 450px;
+        display: block; 
+        margin: auto;
+}
+.image-upload>form>input {
+        display: none;
+      }
+/* div.loader{
+        position: fixed;
+        left: 650px;
+        top: 350px;
+        width: 3rem;
+        height: 3rem;
+        z-index: 9999;
+       
+      } */
+
+    div.imz{
+        /* width: 285px;         */
+        /* border: 5px solid black; */
+        width: 650px; height: 560px;
+    }  
+div.uploadTime{
+        margin-top: 20px;
+}  

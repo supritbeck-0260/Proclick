@@ -1,0 +1,17 @@
+.shadowEffect {
+    box-shadow: 10px 10px 5px #cbc9c9;
+}
+img.indiImage{
+    box-shadow: 10px 10px 5px gray;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 450px;
+}
+.text-responsive {
+    font-size: calc(25% + 1vw + 1vh);
+    display: inline-block;
+  }
+  .text-responsive-date {
+    font-size: calc(5% + 1vw + 1vh);
+    display: inline-block;
+  }

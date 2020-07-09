@@ -1,0 +1,35 @@
+*{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+}
+body{
+        min-height: 100vh;
+}
+.sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+      }
+.image-upload>form>input {
+        display: none;
+      }
+
+    div.imz{
+        width: 650px; height: 560px;
+    }  
+div.uploadTime{
+        margin-top: 20px;
+}  
+
+
+div.nameCard{
+        opacity: 1;
+}
+div.nameCard.nameCardShow{
+        opacity: 1;
+}
+.checked {
+        color: rgb(40, 112, 207);
+      }
+

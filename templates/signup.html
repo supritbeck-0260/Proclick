@@ -1,0 +1,26 @@
+<div class="signup" ng-controller="signupCtrl">
+    <form class="box1 text-center mx-auto my-3" name="registerForm">
+        <h1>Sign Up</h1>
+        <input type="text" ng-model="user.name" placeholder="Name" required>
+        <input type="email" ng-model="user.email" placeholder="email" required>
+        <select  ng-model="user.gender" required>
+            <option  value="" class="text-dark">Gender</option>
+            <option value="male" class="text-dark">Male</option>
+            <option value="female" class="text-dark">Female</option>
+        </select>
+        <input type="password" name="userPassword" ng-model="user.password" placeholder="password" ng-keydown="passErr()" ng-pattern="/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/" required>  
+        <input type="password" ng-model="user.cpassword" placeholder="Confirm password">
+        <input type="submit" ng-click="submit()" ng-disabled="!registerForm.userPassword.$valid" value="{{createBtn}}">
+        <div ng-show="signupErr" class="alert {{dynclass}} sualert mx-auto" role="alert">
+            <p ng-bind="ErrorMsg"></p>
+        </div>
+        <div ng-show="!registerForm.userPassword.$valid && passError" class="alert alert-info sualert mx-auto" role="alert">
+            <p>Password should be at least 8 characters long and should contain one number,one uppercase character and one special character. eg-: Pas$word123</p>
+        </div>
+        
+        <p class="text-white">
+            Already have an account ? <a href="#/login" class="loginhere-link">Login here</a>
+        </p>
+    </form> 
+    
+</div>

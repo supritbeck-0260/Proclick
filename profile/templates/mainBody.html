@@ -1,0 +1,110 @@
+<div ng-controller = "indexCtrl" ng-init="profileGet()">
+      
+    <!-- Upload Data -->
+    <div class="container" >
+        <!-- Profile Picture -->
+       <div class="row my-3">
+           <div class="col-lg-3">
+               <div class="image-upload">
+               <form method="POST">
+                   <label for="file-input">
+                     <img ng-src="{{profPic}}" class="img-thumbnail"/>
+                   </label>
+                 
+                   <input id="file-input"  file-input="profile" onchange="angular.element(this).scope().SelectFile(event)" type="file" required/>
+                 </div>
+               </form>
+               <div ng-if="flag">
+                   <input class="bg-primary text-white" type="button"  ng-click="profilePic()" value="{{save}}"  ng-disabled="isDisable">
+                   <input class="bg-warning text-white" type="button"  ng-click="cancle()" value="Cancle"  ng-disabled="isDisable">
+               </div>
+           </div>
+           <!-- Profile Picture -->
+           <!-- Picture upload form -->
+           <div class="col-lg-9">
+               <h3>Suprit Beck</h3>
+               <!-- <form method="POST" enctype="multipart/form-data">
+                   <div class="col-lg-8 m-auto" >
+                       <div class="form-group">
+                           <label for="user">Name:</label>
+                           <input type="text" name="name" ng-model="name" class="form-control">
+                       </div>
+                       
+                       <div class="form-group">
+                           <label for="user">Profile Pic:</label>
+                           <input type="file" file-input="files" accept="image/*" class="form-control">
+                       </div>
+           
+                       <div class="form-group">
+                           <input type="button" class="btn btn-primary" ng-click="uploadFile()" value="{{upload}}" ng-disabled="isDisable">
+                       </div>
+                   </div>   
+               </form> -->
+           </div>
+       </div>
+      
+   </div>
+   <!-- Picture upload form -->
+  
+<div class="container-fluid bg-info border rounded-pill text-center font-weight-bold text-white">MY GALLERY</div>
+<!-- <div class="spinner-border text-info loader" role="status"></div> -->
+
+   <!-- image grid -->
+   <Div class="container-fluid" infinite-scroll="select()">
+       <div class="row text-dark text-center">
+           <div  class="col-lg-6 col-md-12 col-12 imz mx-auto" ng-repeat="image in images" style="width: 650px; height: 560px;"> 
+               <img ng-src="upload/{{image.img}}" class="img-thumbnail img-fluid my-3 rounded" style="width: 650px; height: 450px;"/> 
+               
+                   <span ng-bind="image.id"></span> {{": "}}
+                   <span ng-bind="image.name"></span> 
+                   <button class="bg-danger float-right text-white" ng-click="delete(image.id,$index)">Delete</button>
+                   <button class="bg-info float-right mx-3 px-3 text-white" data-toggle="modal" data-target="#myModal" ng-click="edit(image.id,image.name,$index)">Edit</button>
+                     <br>
+               <div class="uploadTime">
+                   <div class="bg-success mx-auto text-light border rounded-pill">  
+                       <span> Uploaded </span>  
+                       <span>{{image.msg | date  :  "dd MMMM y hh:mm a" }}</span>
+                   </div> 
+               </div>  
+                  
+           </div> 
+
+           <!-- Edit Modal  -->
+           <div class="modal" id="myModal">
+               <div class="modal-dialog">
+                   <div class="modal-content">
+                           <!-- Modal Header -->
+                           <div class="modal-header">
+                           <h4 class="modal-title">Edit Image Name</h4>
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           </div>
+                       <!-- Modal body -->
+                           <div class="modal-body">
+                               <div class="form-group">
+                                   <label for="user" class="float-left">New Name:</label>
+                                   <input type="text" name="name" ng-model="EditedName" class="form-control px-3">
+                               </div>
+                           </div>
+                       <!-- Modal footer -->
+                           <div class="modal-footer">
+                               <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="save(EditedName)">Save</button>
+                               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                           </div>
+                   </div>
+               </div>
+           </div>
+   </div>
+
+  <!-- image grid -->
+
+  <!-- Loader -->
+  <div class="row my-3">
+       <div class="w-30 my-3 mx-auto">
+               <div ng-show="loading"  class="spinner-border text-dark" role="status">
+                   <span class="sr-only">Loading...</span>
+               </div>
+       </div>
+  </div>
+  <!-- Loader -->
+  
+</div>

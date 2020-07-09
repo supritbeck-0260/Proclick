@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-171523451-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-171523451-1");
+    </script>
+
+    <title>ProClick, Photography Teaching and Learning</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ProClick is the best site for Photographer. Upload your best shot and educate people about Photography."
+    />
+    <meta
+      name="keywords"
+      content="Photography, Camera stiings, Editing, Learning, Professional Photography"
+    />
+
+    <script src="scripts/thirdParty/jquery.min.js"></script>
+    <script src="scripts/thirdParty/angular.min.js"></script>
+    <script src="scripts/thirdParty/popper.min.js"></script>
+    <script src="scripts/thirdParty/bootstrap.min.js"></script>
+    <script src="scripts/thirdParty/ng-infinite-scroll.js"></script>
+    <script src="scripts/thirdParty/angular-route.min.js"></script>
+
+    <link rel="stylesheet" href="css/thirdparty/login.css" />
+    <link rel="stylesheet" href="css/thirdparty/signup.css" />
+    <link rel="stylesheet" href="css/thirdparty/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/thirdparty/main.css" />
+    <link rel="stylesheet" href="css/thirdparty/home.css" />
+    <link rel="stylesheet" href="css/thirdparty/profile.css" />
+    <link rel="stylesheet" href="css/thirdparty/notification.css" />
+    <link rel="stylesheet" href="css/thirdparty/image.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+
+  <body ng-app="myApp">
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0"
+    ></script>
+    <!-- facebook sharing -->
+    <!-- Navigation Bar -->
+    <div ng-include="'templates/navbar.html'"></div>
+    <!-- Navigation Bar -->
+    <div ng-view class="viewCss"></div>
+
+    <!-- Footer -->
+    <div
+      class="col-lg-12 col-md-12 col-12 bg-info my-5"
+      ng-include="'templates/footer.html'"
+    ></div>
+    <!-- Footer -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script> -->
+    <!-- Scripts  -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDKMZtEhnsFJNNHLRZBXuMoUshipDZS7Kw"></script>
+    <script src="scripts/index.js"></script>
+    <script src="scripts/services/loginService.js"></script>
+    <script src="scripts/services/sessionService.js"></script>
+    <script src="scripts/product.js"></script>
+    <script src="scripts/navbar.js"></script>
+  </body>
+</html>

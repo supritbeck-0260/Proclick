@@ -1,0 +1,15 @@
+<div class="signup" ng-controller="loginCtrl">
+    <form class="box text-center mx-auto my-5" ng-submit="forgot()">
+        <h2>Enter Your Email</h2>
+        <input type="email" ng-model="email" name="email" placeholder="email" required>
+        <input type="submit" value="{{submitBtn}}">
+        <div ng-show="forgotErr" class="alert alert-success lialert mx-auto" role="alert">
+            <p ng-bind="ErrorMsg"></p>
+        </div>
+        <p class="text-white">
+             <a href="#/login" class="loginhere-link">Login here</a>
+        </p>
+        
+    </form> 
+    
+</div>

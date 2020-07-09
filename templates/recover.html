@@ -1,0 +1,16 @@
+<div class="signup" ng-controller="forgotCtrl">
+    <form class="box1 text-center mx-auto my-3" name="registerForm">
+        <h2>Reset Password</h2>
+        <input type="password"  ng-model="user.password" name="userPassword" placeholder="password" ng-keydown="passErr()" ng-pattern="/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/" required>  
+        <input type="password" ng-model="user.cpassword" placeholder="Confirm password">
+        <input type="submit" ng-click="submit()" ng-disabled="!registerForm.userPassword.$valid" value="{{createBtn}}">
+        <div ng-show="!registerForm.userPassword.$valid && passError" class="alert alert-info sualert mx-auto" role="alert">
+            <p>Password should be at least 8 characters long and should contain one number,one uppercase character and one special character</p>
+        </div>
+        <div ng-show="signupErr" class="alert {{dynclass}} sualert mx-auto" role="alert">
+            <p ng-bind="ErrorMsg"></p>
+        </div>
+        
+    </form> 
+    
+</div>

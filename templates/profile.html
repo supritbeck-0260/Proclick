@@ -1,0 +1,334 @@
+<div ng-controller = "indexCtrl" ng-init="profileGet(); getProfileInfo()">
+      
+    <!-- Upload Data -->
+    <div class="container profileTop" >
+        <!-- Profile Picture -->
+       <div class="row my-3">
+           <div class="col-lg-3 col-md-3">
+               <div class="image-upload my-1">
+               <form method="POST">
+                   <label for="file-input">
+                     <img title="{{userName}}" ng-src="{{profPic}}" class="img-thumbnail profilePhoto" alt="{{userName}}"/>
+                   </label>
+                 
+                   <input id="file-input" ng-if="uid.myuid===uid.routeuid"  onchange="angular.element(this).scope().SelectFile(event)" type="file" required accept="image/*"/>
+                 </div>
+               </form>
+               <div ng-if="flag && (uid.myuid===uid.routeuid)">
+                   <input class="btn btn-primary text-white shadow" type="button"  ng-click="profilePicPost()" value="{{save}}"  ng-disabled="isDisable">
+                   <input class="btn btn-warning text-white shadow" type="button"  ng-click="Cancel()" value="Cancel"  ng-disabled="isDisable">
+               </div>
+           </div>
+           <!-- Profile Picture -->
+           <!-- Picture upload form -->
+           <div class="col-lg-8 col-md-8 my-1">
+                <div class="card nameCard"  ng-if="toggleProfileEdit">
+                        <div class="card-header">
+                            <h4>Profile Rating:
+                                <span class="mx-1">
+                                    <avg-rating rate="avgProfileRating"></avg-rating>
+                                </span>  
+                               <span ng-if="uid.myuid===uid.routeuid" ng-click="editProfile()"><i class="fa fa-pencil-square-o pull-right EditIcon" aria-hidden="true"></i></span> 
+                            </h4>
+                            
+                        </div>
+                    
+                        <div class="card-body">
+                            <h3 class="card-title ">{{userName}}</h3>
+                            <p class=" ">Camera Own: 
+                                <a href="{{userInfoCameralink}}" target="_blank" class="text-dark">{{userInfoCamera}}</a>    
+                            </p>
+                            <p class=" ">Lenses Own: 
+                                <a href="{{userInfoLenslink}}" target="_blank" class="text-dark">{{userInfoLens}}</a>
+                            </p>
+                            <p class=" ">Editing Software: 
+                                <a href="https://www.google.com/search?q={{userInfoEditingTool}}" target="_blank" class="text-dark">{{userInfoEditingTool}}</a>
+                            </p>
+                            <p class="card-text">About me: {{userInfoAboutMe}}</p>
+                            <p>Started on: {{startedOn |  date  :  "dd MMMM y" }}</p>
+                        </div>
+                </div>
+                <div class="card nameCard" ng-if="!toggleProfileEdit">
+                    <div class="card-header">
+                        <h4>Edit Profile 
+                                
+                                        <div ng-show="!profileInfoLoaded"  class="spinner-border text-dark" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                            <span ng-click="editProfile()"><i class="fa fa-times-circle pull-right EditIcon"></i></span> 
+                            <span ng-click="saveProfileInfo(userInfoCamera,userInfoLens,userInfoEditingTool,userInfoAboutMe)">
+                                <i class="fa fa-save pull-right EditIcon mr-3"></i>
+                            </span> 
+                        </h4>   
+                    </div>
+                
+                    <div class="card-body">
+                        <h3 class="card-title " ng-model="userName"></h3>
+                        <form class="form-horizontal">
+                            <div class="row form-group">
+                                <label class="control-label col-lg-3">Camera Own:</label>
+                                <div class="col-lg-9">
+                                    <!-- <input type="text" class="form-control" ng-model="userInfoCamera"> -->
+                                    <input type="text" ng-keyup="suggestProduct(userInfoCamera)" class="form-control dropdown-toggle" data-toggle="dropdown" ng-model="$parent.userInfoCamera" placeholder="camera name...">
+                                                <!-- Products Suggestion -->
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" ng-repeat="data in products" >
+                                                        <span ng-bind="data.productName" ng-click="setProfileCamera(data)"></span>
+                                                    </a>
+                                                </div>
+                                                <!-- Products Suggestion -->
+                                </div> 
+                            </div>
+                            <div class="row form-group">
+                                <label class="control-label col-lg-3">Lenses Own:</label>
+                                <div class="col-lg-9">
+                                    
+                                    <input type="text" ng-keyup="suggestLens(userInfoLens)" class="form-control dropdown-toggle" data-toggle="dropdown" ng-model="$parent.userInfoLens" placeholder="Lens name...">
+                                                <!-- Products Suggestion -->
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" ng-repeat="data in lens" >
+                                                        <span ng-bind="data.productName" ng-click="setProfilelens(data)"></span>
+                                                    </a>
+                                                </div>
+                                                <!-- Products Suggestion -->
+                                </div> 
+                            </div>
+                            <div class="row form-group">
+                                <label class="control-label col-lg-3">Editing Tool:</label>
+                                <div class="col-lg-9"><input type="text" class="form-control" ng-model="userInfoEditingTool" placeholder=" eg-photoshop.."></div> 
+                            </div>
+                            <div class="row form-group">
+                                <label class="control-label col-lg-3">About me:</label>
+                                <div class="col-lg-9"><input type="text" class="form-control" ng-model="userInfoAboutMe" placeholder="write something about you.."></div> 
+                            </div>
+                        </form>  
+                    </div>
+            </div>
+                <!-- Upload image Modal Start  -->
+                <div class="modal" id="uploadImage">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Upload Image</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                            <!-- Modal body -->
+                                <div class="modal-body">
+                                    <form method="POST" enctype="multipart/form-data">
+                                        <div class="form-group row">    
+                                            <label for="user" class="float-left mx-2 input-label">Image:</label>
+                                            <input type="file" class="input-text" file-input="files" accept="image/*" onchange="angular.element(this).scope().uploadPreview(event)" required>
+                                        </div>
+                                        <div class="uploadPreview" ng-if="uploadPreviewImg">
+                                            <img ng-src="{{uploadPreviewImg}}" class="img-thumbnail previewPic" style="height: 250px;"/>
+                                        </div>
+                                        <div class="form-group row">    
+                                                <label for="user" class="float-left mx-2 input-label">About:</label>
+                                                <!-- <input type="text" name="name" ng-model="" class="input-text px-3"> -->
+                                                <textarea rows="4" class="input-text px-3" ng-model="photoUpload.about" placeholder="Write something..."></textarea>
+                                        </div>
+                                        <div class="dropdown">
+                                            <div class="form-group row">    
+                                                <label for="user" class="float-left mx-2 input-label">Camera:</label>
+                                                <input type="text" ng-keyup="suggestProduct(photoUpload.camera)" class="input-text px-3 dropdown-toggle" data-toggle="dropdown" ng-model="photoUpload.camera" placeholder="Camera used...">
+                                                <!-- Products Suggestion -->
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" ng-repeat="data in products" >
+                                                        <span ng-bind="data.productName" ng-click="setData(data)"></span>
+                                                    </a>
+                                                </div>
+                                                <!-- Products Suggestion -->
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">    
+                                            <label for="user" class="float-left mx-2 input-label">Photography:</label>
+                                            <input type="text" class="input-text px-3" ng-model="photoUpload.photography" placeholder="wildlife, wedding, candid etc...">
+                                        </div>
+                                        <div class="dropdown">
+                                            <div class="form-group row">    
+                                                <label for="user" class="float-left mx-2 input-label">Lens:</label>
+                                                <input type="text" class="input-text px-3 dropdown-toggle" data-toggle="dropdown" ng-keyup="suggestLens(photoUpload.lens)" ng-model="photoUpload.lens" placeholder="Did you use lens? 50mm 70mm etc...">
+                                                <!-- Products Suggestion -->
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" ng-repeat="data in lens" >
+                                                        <span ng-bind="data.productName" ng-click="setDataLens(data)"></span>
+                                                    </a>
+                                                </div>
+                                                <!-- Products Suggestion -->
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">    
+                                            <label for="user" class="float-left mx-2 input-label">Editing Tool:</label>
+                                            <input type="text" class="input-text px-3" ng-model="photoUpload.editing" placeholder="Editing app used...">
+                                        </div>
+                                        <div class="form-group row">    
+                                            <label for="user" class="float-left mx-2 input-label">Settings:</label>
+                                            <input type="text" class="input-text px-3" ng-model="photoUpload.setting" placeholder="ISO,focus,shutter speed etc...">
+                                        </div>
+                                        <div class="form-group row">    
+                                            <label for="user" class="float-left mx-2 input-label">Location:</label>
+                                            <input type="text"id="searchTextField" googleplace class="input-text px-3" ng-model="photoUpload.location"  placeholder="Location of picture...">
+                                        </div>
+                                        <div >
+                                            <input type="submit" class="text-submit" ng-click="uploadFile()" value="{{upload}}" ng-disabled="isDisable">
+                                        </div>
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Upload image Modal End  -->
+           </div>
+       </div>
+      
+   </div>
+   <!-- Picture upload form -->
+  
+
+
+<div class="container-fluid bg-info border rounded-pill text-center font-weight-bold text-white"><span ng-if="uid.myuid===uid.routeuid">MY</span> GALLERY</div>
+<!-- <div class="spinner-border text-info loader" role="status"></div> -->
+
+   <!-- image grid -->
+   <Div class="container-fluid" infinite-scroll="getmyFiles()">
+       <div class="row text-dark text-center">
+           <div  class="mx-auto imageDiv" ng-repeat="image in gallery"> 
+               <img ng-src="upload/{{image.filename}}" data-toggle="modal" data-target=".bd-example-modal-lg" class="img-thumbnail img-fluid rounded profileImage" ng-click="imagePreview(image,$index)"/> 
+                  
+           </div> 
+<!-- Image show modal  -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <button type="button" class=" btn btn-danger" data-dismiss="modal">Close</button>
+          <div>
+            <a href="#/image/{{Edited.id}}&p">
+            <img src="../upload/{{Edited.filename}}" class="img-thumbnail img-fluid " style="height:300px;" alt="image">
+            </a>
+          </div>
+           
+        <div class="modal-body font-weight-bold">
+            <div ng-if="isEditing">
+                <table class="table">
+                    <tr>
+                        <td>Avg. Rating</td>
+                        <td><avg-rating rate="Edited.avgRating"></avg-rating><span>({{Edited.totalRating}})</span></td>
+                    </tr>
+                    <tr ng-if="Edited.msg">
+                        <td>Uploaded</td>
+                        <td>{{Edited.msg | date  :  "dd MMMM y hh:mm a" }}</td>
+                    </tr>
+                    <tr ng-if="Edited.about">
+                        <td>About</td>
+                        <td>{{Edited.about}}</td>
+                    </tr>
+                    <tr ng-if="Edited.camera">
+                        <td>Camera</td>
+                        <td>{{Edited.camera}}</td>
+                    </tr>
+                    <tr ng-if="Edited.photography">
+                        <td>Photography</td>
+                        <td>{{Edited.photography}}</td>
+                    </tr>
+                    <tr ng-if="Edited.lens">
+                        <td>Lens</td>
+                        <td>{{Edited.lens}}</td>
+                    </tr>
+                    <tr ng-if="Edited.editing">
+                        <td>Editing Tool</td>
+                        <td>{{Edited.editing}}</td>
+                    </tr>
+                    <tr ng-if="Edited.setting">
+                        <td>Settings</td>
+                        <td>{{Edited.setting}}</td>
+                    </tr>
+                    <tr ng-if="Edited.location">
+                        <td>Location</td>
+                        <td>{{Edited.location}}</td>
+                    </tr>
+                </table>
+                <div class="row px-3" ng-if="uid.myuid===uid.routeuid">       
+                    <button class="btn btn-primary col-lg-6 col-md-6 col-6" ng-click="wannaEdit()">Edit</button>
+                    <button class="btn btn-danger col-lg-6 col-md-6 col-6" data-dismiss="modal" ng-click="delete(Edited.id,Edited.index)">Delete</button> 
+                </div>
+            </div>
+            <div ng-if="!isEditing">
+                <form method="POST" enctype="multipart/form-data">
+                    <table class="table">
+                        <tr >
+                            <td>About:</td>
+                            <td> <textarea rows="3" class="input-text px-3" ng-model="Edited.about" placeholder="Write something..."></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Camera:</td>
+                            <td>
+                                <div class="dropdown">
+                                        <input type="text" class="input-text px-3 dropdown-toggle" ng-keyup="suggestProduct(Edited.camera)" ng-model="Edited.camera" data-toggle="dropdown" placeholder="Camera used...">
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" ng-repeat="data in products" >
+                                                <span ng-bind="data.productName" ng-click="setEditData(data)"></span>
+                                            </a>
+                                        </div>
+                                        <!-- Products Suggestion -->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Photography:</td>
+                            <td><input type="text"  class="input-text px-3" ng-model="Edited.photography" placeholder="wildlife, wedding, candid etc..."></td>
+                        </tr>
+                        <tr>
+                            <td>Lens:</td>
+                            <td>
+                                <!-- <input type="text" class="input-text px-3" ng-model="Edited.lens" placeholder="Did you use lens? 50mm 70mm etc..."> -->
+                                <div class="dropdown">
+                                    <input type="text" class="input-text px-3 dropdown-toggle" ng-keyup="suggestLens(Edited.lens)" ng-model="Edited.lens" data-toggle="dropdown" placeholder="Did you use lens? 50mm 70mm etc...">
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" ng-repeat="data in lens" >
+                                            <span ng-bind="data.productName" ng-click="setEditDatalens(data)"></span>
+                                        </a>
+                                    </div>
+                                    <!-- Products Suggestion -->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Editing Tool:</td>
+                            <td> <input type="text" class="input-text px-3" ng-model="Edited.editing" placeholder="Editing app used..."></td>
+                        </tr>
+                        <tr>
+                            <td>Settings:</td>
+                            <td><input type="text" class="input-text px-3" ng-model="Edited.setting" placeholder="ISO,focus,shutter speed etc..."></td>
+                        </tr>
+                        <tr>
+                            <td>Location:</td>
+                            <td><input type="text" class="input-text px-3" googleplace ng-model="Edited.location" googleplace placeholder="Location of picture..."></td>
+                        </tr>
+                    </table>
+                </form>
+                <div class="row px-3" ng-if="uid.myuid===uid.routeuid">       
+                    <button class="btn btn-primary col-lg-6 col-md-6 col-6" data-dismiss="modal" ng-disabled="saveEdit=='saving...'" ng-click="save(Edited)">{{saveEdit}}</button>
+                    <button class="btn btn-warning col-lg-6 col-md-6 col-6" ng-click="wannaEdit()">Cancel</button> 
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+ 
+
+</div>
+<!-- Image show modal  -->
+  <!-- image grid -->
+
+  <!-- Loader -->
+  <div class="row col-lg-12 my-3" ng-show="loading"  >
+       <div class="w-30 my-3 mx-auto">
+               <div class="spinner-border text-dark" role="status">
+                   <span class="sr-only">Loading...</span>
+               </div>
+       </div>
+  </div>
+  <!-- Loader -->
+  
+</div>

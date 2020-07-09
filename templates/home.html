@@ -1,0 +1,103 @@
+
+   <!-- image grid -->
+   <div class="container-fluid" infinite-scroll="select()">
+       <div class="row">
+            <div  class="col-lg-12 col-md-12 col-12 mx-auto" ng-repeat="image in images" > 
+              <div class="col-lg-10 mx-auto my-3">
+                <div class="card nameCard infoCard" >
+                        <div class="card-header">
+                            <h4 ><a href="#/profile/{{image.uid}}"><span class="text-dark" title="user">
+                              <i class="fa fa-user-circle profileStar" aria-hidden="true"></i> {{image.user}}</span></a>
+                               <i class="fa fa-server pull-right profileStar" title="Options" aria-hidden="true"></i>
+                            </h4>
+                            
+                        </div>
+                    
+                        <div class="card-body">
+                          <a href="#/image/{{image.id}}&{{$index}}">
+                            <img title="{{image.location}}" ng-src="upload/{{image.filename}}" class="indiImage d-flex justify-content-center img-fluid" alt="{{image.location}}" />
+                          </a> 
+                        </div>
+
+                        <div class="card-header">
+                          <div> 
+                            <h5 class="text-center" ng-if="image.about">{{image.about}}</h5>                            
+                          </div>
+                          
+                          <div class="d-block font-weight-bold"><span class="text-responsive"> Avg. Rating:</span>
+                            <span class="text-responsive">
+                              <avg-rating rate="image.avgRating"></avg-rating>
+                              <span>({{image.totalRating}})</span>
+                            </span>  
+                         </div>
+                            <div class="row">
+                                    <div class="card bg-light mb-3 mx-1 infoCard photograhyInfo" ng-if="image.camera" style="max-width: 18rem;">
+                                            <div class="card-header"><i class="fa fa-camera-retro" aria-hidden="true"></i> Camera</div>
+                                            <div class="card-body">
+                                              <a href="{{image.link}}" target="_blank" class="text-dark">
+                                              <p class="card-text" ng-bind="image.camera"></p>
+                                             </a>
+                                            </div>
+                                    </div>
+                                    <div class="card bg-light mb-3 mx-1 infoCard photograhyInfo" ng-if="image.photography" style="max-width: 18rem;">
+                                            <div class="card-header"><i class="fa fa-area-chart" aria-hidden="true"></i> Photography</div>
+                                            <div class="card-body">
+                                              <p class="card-text" ng-bind="image.photography"></p>
+                                            </div>
+                                    </div>
+                                    <div class="card bg-light mb-3 mx-1 infoCard photograhyInfo" ng-if="image.editing" style="max-width: 18rem;">
+                                            <div class="card-header"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editing Tool</div>
+                                            <div class="card-body">
+                                              <a href="https://www.google.com/search?q={{image.editing}}" target="_blank" class="text-dark">
+                                              <p class="card-text" ng-bind="image.editing"></p>
+                                              </a>
+                                            </div>
+                                    </div>
+                                    <div class="card bg-light mb-3 mx-1 infoCard photograhyInfo" ng-if="image.lens" style="max-width: 18rem;">
+                                            <div class="card-header"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Lense</div>
+                                            <div class="card-body">
+                                              <a href="{{image.lensLink}}" target="_blank" class="text-dark">
+                                               <p class="card-text" ng-bind="image.lens"></p>
+                                              </a>
+                                            </div>
+                                    </div>
+                                    <div class="card bg-light mb-3 mx-1 infoCard photograhyInfo" ng-if="image.setting" style="max-width: 18rem;">
+                                            <div class="card-header"><i class="fa fa-cogs" aria-hidden="true"></i> Settings</div>
+                                            <div class="card-body">
+                                              <p class="card-text" ng-bind="image.setting"></p>
+                                            </div>
+                                    </div>
+                                    <div class="card bg-light mb-3 mx-1 infoCard photograhyInfo" ng-if="image.location" style="max-width: 18rem;">
+                                            <div class="card-header"><i class="fa fa-map-marker" aria-hidden="true"></i> Location</div>
+                                            <div class="card-body">
+                                              <a href="https://www.google.com/search?q={{image.location}}" target="_blank" class="text-dark">
+                                               <p class="card-text" ng-bind="image.location"></p>
+                                              </a>
+                                            </div>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                  <div class="col-lg-6 col-md-6 col-6">
+                                    <div class="text-responsive font-weight-bold" ng-if="uid.myuid"><span ng-if="!image.myRating" class="rateThis">Rate this picture:</span> <span ng-if="image.myRating" class="rateThis">You have rated:</span> 
+                                      <span class="mx-1">
+                                          <rating rate="image.myRating" id="image.id" uid="image.uid" index="$index"></rating>
+                                      </span>  
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-6 text-responsive-date text-right"><p>Uploaded {{image.msg | date  :  "dd MMMM y hh:mm a" }}</p></div>  
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+      <!-- image grid -->
+      <!-- Loader -->
+        <div class="row col-lg-12 my-3"  ng-show="loading" >
+            <div class="col-lg-12 my-3 text-center">
+                    <div class="spinner-border text-dark float-center" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+            </div>
+       </div>
+       <!-- Loader -->   
+ </div>

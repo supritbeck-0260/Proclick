@@ -1,0 +1,86 @@
+$mdb-animation-curve-default: cubic-bezier(0.4, 0, 0.2, 1);
+$default-spacing: 10px;
+
+@keyframes rating-stars-blink {
+    0% {
+        opacity: .8;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+rating-stars {
+    .mutable {
+        cursor: pointer;
+    }
+    
+    .hover {
+        .star {
+            position: relative;
+            
+            &:hover {
+                &::after {
+                    animation-name: rating-stars-blink;
+                    animation-duration: .5s;
+                    animation-timing-function: $mdb-animation-curve-default;
+                }
+            }
+
+            &::after {
+                position: absolute;
+                top: 0;
+                left: 0;
+                color: #4ec2cb;
+                content: 'star';
+                opacity: 0;
+            }
+        }
+    }
+    
+    .ratings-right,
+    .ratings-left {
+        vertical-align: middle;
+        color: #858585;
+    }
+    
+    .ratings-right {
+        margin-left: $default-spacing / 2;
+    }
+    
+    .ratings-left {
+        margin-right: $default-spacing / 2;
+    }
+    
+    .star {
+        color: #949494;
+        transition: color .2s $mdb-animation-curve-default;
+        vertical-align: middle;
+        
+        &::before {
+            content: 'star_border';
+        }
+        
+        &.on,
+        &.on-half {
+            color: #f7931e;
+            
+            &.my {
+                color: #4ec2cb
+            }
+        }
+        
+        &.on {
+            &::before {
+                content: 'star';
+            }
+        }
+        
+        &.on-half {
+            &::before {
+                content: 'star_half';
+            }
+        }
+    }
+}

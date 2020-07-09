@@ -1,0 +1,16 @@
+<div class="logOuter" ng-controller="loginCtrl">
+    <form class="box text-center mx-auto my-5">
+        <h1>Login</h1>
+        <input type="email" ng-model="user.email" name="email" placeholder="email" required>
+        <input type="password" ng-model="user.password" name="password" placeholder="password" required>
+        <input type="submit" ng-click="submit()" value="Login">
+        <div ng-show="signupErr" class="alert alert-danger lialert mx-auto" role="alert">
+            <p ng-bind="ErrorMsg"></p>
+        </div>
+        <p class="text-white">
+            Do not have an account ? <a href="#/signup" class="loginhere-link">Sign Up here</a>
+        </p>
+    </form> 
+    
+</div>
+

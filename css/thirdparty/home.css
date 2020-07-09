@@ -1,0 +1,25 @@
+
+img.homeImage{
+    
+    box-shadow: 10px 10px 5px gray;
+    /* margin-top: 5px; */
+    /* margin-bottom: 14px; */
+    max-width: 85%;  
+    max-height: 450px;
+}
+h4.imgBottom{
+    width: 200px;
+}
+div.infoCard{
+    box-shadow: 10px 10px 5px gray;
+}
+.photograhyInfo:hover{
+    transform: scale(1.08,1.08);
+
+    -webkit-transition: 0.3s ease-out;
+}
+@media (max-width: 500px) {
+    .rateThis {
+      display: block;
+      float: none;
+    }

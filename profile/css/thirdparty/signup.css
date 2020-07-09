@@ -1,0 +1,102 @@
+div.signup{
+    margin:0;
+    
+    padding:0;
+    font-family: sans-serif;
+    background-color:#edfafd;
+}
+.box1{
+    width: 400px;
+    padding: 40px;
+   
+    position: relative;
+    /* top: 50%;
+    left:50%; */
+    /* transform: translate(-50%,-50%); */
+    background: #191919;
+    text-align: center;
+}
+.box1 h1{
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.box1 input[type="text"],.box1 input[type="password"],.box1 input{
+    border:0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 14px 10px;
+    width:200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.box1 select{
+    /* border:0; */
+    background: none;
+    display: block;
+    margin: 20px auto;
+    /* text-align: center; */
+    border: 2px solid #3498db;
+    padding: 14px 10px;
+    width:200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.box1 input[type="text"]:hover,.box1 input[type="password"]:hover,.box1 input[type="email"]:hover{
+   width: 280px;
+   border-color: #2ecc71;
+}
+.box1 select:hover{
+    width: 280px;
+    border-color: #2ecc71;
+ }
+.box1 input[type="submit"]{
+    border:0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #26cc71;
+    padding: 14px 40px;
+  
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+.box1 input[type="submit"]:hover{
+    background: #26cc71;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #26cc71;
+    padding: 14px 40px;
+  
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+div.sualert{
+    width:70%;
+    /* height: 50px; */
+    /* radius:24px; */
+}
+/* div.signup-content{
+    width: 50%;
+    margin: auto;
+    margin-top: auto;
+    background-color: cornsilk;
+} */
+
